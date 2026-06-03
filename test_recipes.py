@@ -9,6 +9,12 @@ def test_ingredient_init():
     assert a.quantity == 500
     assert a.unit == "г"
 
+def test_recipe_init():
+    r = Recipe("Салат")
+    assert r.title == "Салат"
+    assert r.ingredients == []
+    
+
 def test_add_new_ingredient():
     r = Recipe("Салат")
     i = Ingredient("Помидоры", 500, "г")
