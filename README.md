@@ -19,7 +19,9 @@
 # Установка 
 
 Клонируйте репозиторий:
-'''git clone https://github.com/denistru1/TP_HW2
+```
+git clone https://github.com/denistru1/TP_HW2
 cd TP_HW2
 pip install -r requirements.txt
-pytest'''
+pytest
+```
