@@ -9,11 +9,33 @@ def test_ingredient_init():
     assert a.quantity == 500
     assert a.unit == "г"
 
+
+def test_ingredient_str():
+    a = Ingredient("Мука", 500, "г")
+    assert str(a) == "Мука: 500.0 г"
+
+
+def test_eq_same_name_unit_different_quantity():
+    a = Ingredient("Мука", 500, "г")
+    b = Ingredient("Мука", 100, "г")
+    assert a == b
+
+def test_eq_different_name():
+    a = Ingredient("Сахар", 10, "г")
+    b = Ingredient("Соль", 10, "г")
+    assert a != b
+
+def test__eq_different_unit():
+    a = Ingredient("Сахар", 10, "г")
+    b = Ingredient("Сахар", 10, "кг")
+    assert a != b
+
+
 def test_recipe_init():
     r = Recipe("Салат")
     assert r.title == "Салат"
     assert r.ingredients == []
-    
+
 
 def test_add_new_ingredient():
     r = Recipe("Салат")
