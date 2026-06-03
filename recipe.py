@@ -38,5 +38,5 @@ class Recipe:
     def __str__(self):
         answer = self.title + "\n"
         for ing in self.ingredients:
-            result += str(ing) + "\n"
+            answer += str(ing) + "\n"
         return answer
