@@ -86,3 +86,91 @@ def test_len_recipe():
     r.add_ingredient(Ingredient("Огруцы", 300, "г"))
     assert len(r) == 2
 
+def test_add_recipe():
+    l = ShoppingList()
+    r = Recipe("Салат")
+    r.add_ingredient(Ingredient("Помидоры", 500, "г"))
+    l.add_recipe(r, 2)
+    assert len(l._items) > 0
+
+def test_add_recipe_invalid_portions():
+    l = ShoppingList()
+    r = Recipe("Салат")
+    with pytest.raises(ValueError):
+        l.add_recipe(r, 0)
+
+
+def test_remove_recipe():
+    l = ShoppingList()
+    r1 = Recipe("Салат")
+    r1.add_ingredient(Ingredient("Помидоры", 500, "г"))
+    r2 = Recipe("Торт")
+    r2.add_ingredient(Ingredient("Мука", 1000, "г"))
+    l.add_recipe(r1, 1)
+    l.add_recipe(r2, 1)
+    l.remove_recipe("Салат")
+    for ing, title in l._items:
+        assert title != "Салат"
+
+
+def test_remove_recipe_not_exists():
+    l = ShoppingList()
+    r = Recipe("Салат")
+    r.add_ingredient(Ingredient("Помидоры", 500, "г"))
+    l.add_recipe(r, 1)
+    l.remove_recipe("Торт")
+    assert len(l._items) > 0
+
+
+def test_get_list_sum_same_ingredients():
+    l = ShoppingList()
+    r1 = Recipe("Торт")
+    r1.add_ingredient(Ingredient("Сахар", 200, "г"))
+    r2 = Recipe("Пирог")
+    r2.add_ingredient(Ingredient("Сахар", 200, "г"))
+    l.add_recipe(r1, 1)
+    l.add_recipe(r2, 1)
+    result = l.get_list()
+    assert len(result) == 1
+    assert result[0].quantity == 400
+
+
+def test_get_list_sorted():
+    l = ShoppingList()
+    r = Recipe("Салат")
+    r.add_ingredient(Ingredient("Помидоры", 500, "г"))
+    r.add_ingredient(Ingredient("Огурцы", 300, "г"))
+    l.add_recipe(r, 1)
+    result = l.get_list()
+    sp = []
+    for i in result:
+        sp.append(i.name)
+    assert sp == sorted(sp)
+
+
+def test_add_combines_lists():
+    l1 = ShoppingList()
+    l2 = ShoppingList()
+    r = Recipe("Салат")
+    r.add_ingredient(Ingredient("Помидоры", 500, "г"))
+    l1.add_recipe(r, 1)
+    l2.add_recipe(r, 1)
+    l3 = l1 + l2
+    assert l3 is not l1
+    assert l3 is not l2
+    assert len(l3._items) == len(l1._items) + len(l2._items)
+
+
+def test_add_doesnt_change_original():
+    l1 = ShoppingList()
+    l2 = ShoppingList()
+    r = Recipe("Салат")
+    r.add_ingredient(Ingredient("Помидоры", 500, "г"))
+    l1.add_recipe(r, 1)
+    l2.add_recipe(r, 1)
+    l1_len = len(l1._items)
+    l2_len = len(l2._items)
+    l3 = l1 + l2
+    assert len(l1._items) == l1_len
+    assert len(l2._items) == l2_len
+
