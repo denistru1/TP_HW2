@@ -8,7 +8,7 @@ class Recipe:
     def add_ingredient(self, ingredient):
         for ing in self.ingredients:
             if ing == ingredient:
-                int.quantity += ingredient.quantity
+                ing.quantity += ingredient.quantity
                 return
         self.ingredients.append(ingredient)
 
